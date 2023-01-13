@@ -99,8 +99,7 @@ void Twilight::Update(RE::Sky* a_sky)
 		}
 
 		twilightPercent = std::clamp(twilightPercent, 0.0f, 1.0f);
-
-		// Nautical Twilight
+		
 		if (twilightPercent > 0.0f) {
 			RE::NiColor sunlightDark;
 			RE::NiColor ambientDark;
