@@ -1,6 +1,5 @@
 #include "Twilight.h"
 
-#include <ColorSpace/ColorSpace.h>
 #include <SimpleIni.h>
 
 extern ENB_API::ENBSDKALT1002* g_ENB;
@@ -122,7 +121,6 @@ void Twilight::Update(RE::Sky* a_sky)
 		}
 	}
 }
-
 
 void Twilight::UpdateENB()
 {
