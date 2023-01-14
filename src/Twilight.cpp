@@ -61,8 +61,7 @@ float LinearStep(float edge0, float edge1, float x)
 
 void Twilight::Update(RE::Sky* a_sky)
 {
-	if (bEnableTwilight && a_sky->currentWeather) {
-
+	if (bEnableTwilight && a_sky->currentWeather && a_sky->mode.any(RE::Sky::Mode::kFull)) {
 		if (enbEnabled && !bEnableTwilightWithENB) {
 			return;
 		}
@@ -88,18 +87,18 @@ void Twilight::Update(RE::Sky* a_sky)
 		// Day or Night
 		if ((gameHour > sunriseEnd && gameHour < sunsetBegin)) {
 			twilightPercent = 0;
-		// Dawn
+			// Dawn
 		} else if (gameHour < sunriseEnd) {
 			twilightPercent = LinearStep(dawnEnd, dawnBegin, gameHour);
 			twilightPercent = 1 - pow(1 - twilightPercent, fDawnCurve);
-		// Dusk
+			// Dusk
 		} else {
 			twilightPercent = LinearStep(duskBegin, duskEnd, gameHour);
 			twilightPercent = 1 - pow(1 - twilightPercent, fDuskCurve);
 		}
 
 		twilightPercent = std::clamp(twilightPercent, 0.0f, 1.0f);
-		
+
 		if (twilightPercent > 0.0f) {
 			RE::NiColor sunlightDark;
 			RE::NiColor ambientDark;
@@ -116,7 +115,6 @@ void Twilight::Update(RE::Sky* a_sky)
 			if (bEnableAmbient) {
 				a_sky->skyColor[RE::TESWeather::ColorTypes::kAmbient] = LerpColor(a_sky->skyColor[RE::TESWeather::ColorTypes::kAmbient], ambientDark, twilightPercent);
 			}
-
 		}
 	}
 }
